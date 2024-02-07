@@ -2,3 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+body{
+  background-color: #1B1D1F;
+  color: #D2D5DA;
+}
+
+.container{
+  background-color: #282B30;
+  border: 1px solid #6C727F;
+  margin: auto;
+  padding: 25px 15px;
+  border-radius: 15px;
+  margin-top: -50px;
+  z-index: 1;
+  position: relative;
+}
