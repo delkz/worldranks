@@ -3,13 +3,13 @@
 @tailwind utilities;
 
 body{
-  background-color: #1B1D1F;
+  background-color: #1C1D1F;
   color: #D2D5DA;
 }
 
 .container{
-  background-color: #282B30;
-  border: 1px solid #6C727F;
+  background-color: #1C1D1F;
+  border: 1px solid #282B30;
   margin: auto;
   padding: 25px 15px;
   border-radius: 15px;

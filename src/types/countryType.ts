@@ -27,5 +27,20 @@ export default interface Country {
     flag: string;
     population: number;
     cca2: string;
+    cca3: string;
 }
 
+export interface CountryInfo extends Country{
+    capital: string[];
+    subregion: string;
+    languages: {
+        [key: string]: string
+    };
+    currencies: {
+        [key: string]: {
+            name: string;
+            symbol: string;
+        };
+    };
+    continents: string[];
+}

@@ -1,5 +1,6 @@
 'use client';
 
+import getCountryCode from '@/services/countryCode';
 import Country from '@/types/countryType';
 import Link from 'next/link';
 import React, { useState } from 'react'
@@ -20,7 +21,7 @@ const CountriesTable = ({ countries }: CountriesTableProps) => {
                 <th>Region</th>
             </tr>
             {countries && countries.map(country => {
-                return <tr key={country.cca2} className="text-white">
+                return <tr key={country.cca2} data-cca2={country.cca2} data-cca3={country.cca3} className="text-white">
 
                     <td>
                         <ReactCountryFlag
