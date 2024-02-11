@@ -34,9 +34,17 @@ const CountriesTable = ({ countries }: CountriesTableProps) => {
                             }}
                             title={country.name.common} />
                     </td>
-                    <td><Link href={"/country/"+country.name.common}>{country.name.common}</Link></td>
-                    <td>{country.population}</td>
-                    <td>{country.area}</td>
+                    <td><Link href={"/country/" + country.name.common}>{country.name.common}</Link></td>
+                    <td>
+                        {new Intl.NumberFormat().format(
+                            country.population,
+                        )}
+                    </td>
+                    <td>
+                        {new Intl.NumberFormat().format(
+                            country.area,
+                        )}
+                    </td>
                     <td>{country.region}</td>
 
                 </tr>

@@ -9,7 +9,7 @@ export default async function Home() {
   const countries:Country[] = await countriesQ.data;
 
   return (
-    <div className="homePage">
+    <div className="container homePage">
       <Countries countries={countries}/>
     </div>
   );

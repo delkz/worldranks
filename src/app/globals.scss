@@ -11,9 +11,16 @@ body{
   background-color: #1C1D1F;
   border: 1px solid #282B30;
   margin: auto;
-  padding: 25px 15px;
+  padding: 37px 37px;
   border-radius: 15px;
-  margin-top: -50px;
+  margin-top: -35px;
   z-index: 1;
   position: relative;
+  max-width: 1320px;
+  &.countryPage{
+    max-width: 790px;
+  }
+  &.homePage{
+    padding: 25px 37px;
+  }
 }

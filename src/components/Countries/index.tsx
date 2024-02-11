@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import CountriesTable from '../CountriesTable'
 import Country from '@/types/countryType'
+import style from './style.module.scss';
 
 type CountriesTableProps = {
     countries: Country[]
@@ -27,7 +28,8 @@ const Countries = ({ countries }: CountriesTableProps) => {
       const lowerSearchText = searchText.toLowerCase();
       return countries.filter(country =>
         country.name.common.toLowerCase().includes(lowerSearchText) ||
-        country.region.toLowerCase().includes(lowerSearchText)
+        country.region.toLowerCase().includes(lowerSearchText) ||
+        country.subregion.toLowerCase().includes(lowerSearchText)
       );
     }
 
@@ -37,16 +39,24 @@ const Countries = ({ countries }: CountriesTableProps) => {
                 <span>
                     {countries ? "Found " + countries.length + " countries" : "Looking for countries"}
                 </span>
-                <input type="text" onChange={e=>{setCountriesData(filterCountries(countries,e.target.value))}} placeholder="Search by Name, Region, Subregion" />
+                <input className={style.searchInput} type="text" onChange={e=>{setCountriesData(filterCountries(countries,e.target.value))}} placeholder="Search by Name, Region, Subregion" />
             </div>
             <div className="homePage_content flex gap-6 mt-3">
                 <div id="filters" className="flex flex-col w-full max-w-[25%]">
                     <div className="filters_item flex flex-col">
-                        <label htmlFor="sortBy">sort by</label>
-                        <select name="sortBy" onChange={e=>{setOrderBy(e.target.value as orderBy)}}>
+                        <label className={style.label} htmlFor="sortBy">Sort by</label>
+                        <select className={style.selectInput} name="sortBy" onChange={e=>{setOrderBy(e.target.value as orderBy)}}>
                             <option value="population">Population</option>
                             <option value="area">Area</option>
                         </select>
+                    </div>
+                    <div className="filters_item flex flex-col">
+                        <label className={style.label} htmlFor="Region">Region</label>
+                        
+                    </div>
+                    <div className="filters_item flex flex-col">
+                        <label className={style.label} htmlFor="Status">Status</label>
+                        
                     </div>
                 </div>
                 <div className="w-full max-w-[75%]">

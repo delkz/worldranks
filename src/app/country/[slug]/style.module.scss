@@ -1,5 +1,5 @@
 .flag{
-    margin-top: -80px;
+    margin-top: -95px;
 }
 
 .stats{
@@ -32,4 +32,12 @@
         }
     }
 
+}
+
+.tdList{
+    span+span{
+        &::before{
+            content: ', ';
+        }
+    }
 }

@@ -22,6 +22,7 @@ export default interface Country {
     name: Name;
     unMember: boolean;
     region: string;
+    subregion: string;
     borders: string[];
     area: number;
     flag: string;
@@ -32,7 +33,6 @@ export default interface Country {
 
 export interface CountryInfo extends Country{
     capital: string[];
-    subregion: string;
     languages: {
         [key: string]: string
     };

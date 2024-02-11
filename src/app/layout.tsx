@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import Header from "@/components/header";
 
 const bevietnam = Be_Vietnam_Pro({ weight:["500","800"], subsets:["latin-ext"] });
@@ -19,9 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={bevietnam.className}>
         <Header/>
-        <div className="container">
-          {children} 
-        </div>
+        {children} 
       </body>
     </html>
   );
