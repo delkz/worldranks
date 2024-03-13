@@ -4,29 +4,33 @@ import { CountryInfo } from '@/types/countryType';
 import React from 'react'
 import ReactCountryFlag from 'react-country-flag';
 import style from './style.module.scss';
+import { cache } from 'react'
+
 interface CountryProps {
     params: {
         slug: string;
     }
 }
 
-const countryPage = async ({ params }: CountryProps) => {
-    const { slug } = params;
-
-
-    const countriesQ = await countriesApi.get('name/' + slug, {
+export const getData = cache(async (slug:String)=>{
+    return countriesApi.get('name/' + slug, {
         params: {
             fullText: true,
             fields: apiFields("capital,languages,currencies,continents")
         }
-    });
+    })
+})
+
+const countryPage = async ({ params }: CountryProps) => {
+    const { slug } = params;
+
+
+    const countriesQ = await getData(slug);
     const country: CountryInfo = await countriesQ.data[0];
 
     if (!country) {
         return <></>
     }
-
-    console.log(country)
 
     return <div className="container countryPage">
         <div className='text-center'>
