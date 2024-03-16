@@ -1,0 +1,22 @@
+/* CSS para o esqueleto */
+  .skeletonCell {
+    height: 50px;
+    background: linear-gradient(45deg, #3b3c3f, #474747);
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  /* Animação */
+  @keyframes skeleton-animation {
+    0% {
+      background-position: -200px;
+    }
+    100% {
+      background-position: 200px;
+    }
+  }
+  
+  .skeletonRow .skeletonCell {
+    animation: skeleton-animation 1.5s infinite linear;
+  }
+  

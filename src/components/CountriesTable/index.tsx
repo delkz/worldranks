@@ -1,52 +1,77 @@
 'use client';
 
-import getCountryCode from '@/services/countryCode';
 import Country from '@/types/countryType';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import ReactCountryFlag from 'react-country-flag';
+import TableItemSkeleton from './TableItemSkeleton';
+import style from './style.module.scss';
 
 type CountriesTableProps = {
-    countries: Country[]
-}
+    countries: Country[];
+};
 
 const CountriesTable = ({ countries }: CountriesTableProps) => {
-
     const perPage = 25;
     const [currentPage, setCurrentPage] = useState(1);
-    const [loadedCountries,setLoadedCountries] = useState(countries.slice(0,perPage));
-    const quantityElements = countries.length;
+    const [loadingMore, setLoadingMore] = useState(false);
+    const [loadedCountries, setLoadedCountries] = useState<Country[]>([]);
 
-    const handleLoadMoreCountries = ()=>{
+    useEffect(() => {
+        loadCountries();
+    }, [countries, currentPage]);
 
-        setLoadedCountries(countries.slice(0,perPage*(currentPage)));
+    const loadCountries = () => {
+        setLoadingMore(true);
+        setTimeout(() => {
+            setLoadedCountries(countries.slice(0, perPage * currentPage));
+            setLoadingMore(false);
+        }, 500);
+    };
 
-        const remaingCountries = quantityElements - loadedCountries.length;
-
-        if(remaingCountries == 0){
+    const handleScroll = () => {
+        const table = document.getElementById("countryTable");
+        if (!table) {
             return;
         }
 
-        setCurrentPage(prevPage => prevPage + 1);
+        if (loadedCountries.length === countries.length) {
+            setLoadingMore(false);
+            return;
+        }
 
-        console.log({currentPage,loadedCountries,quantityElements,remainingCountries : quantityElements - loadedCountries.length})
-    }
+        const scrollTop = window.scrollY;
+        const scrollHeight = document.documentElement.scrollHeight;
+        const clientHeight = window.innerHeight;
+
+        const distanciaAteOFim = scrollHeight - clientHeight - scrollTop;
+
+        if (distanciaAteOFim === 0 && !loadingMore && loadedCountries.length !== countries.length) {
+            setCurrentPage(prevPage => prevPage + 1);
+        }
+    };
 
     useEffect(() => {
-        setLoadedCountries(countries.slice(0,perPage));
-        setCurrentPage(1);
-    }, [countries])
-    
+        window.addEventListener("scroll", handleScroll);
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, [countries.length, loadedCountries.length, loadingMore]);
 
+    const showSkeletons = (count = perPage) => {
+        const skeletons = [];
+        for (let i = 0; i < count; i++) {
+            skeletons.push(<TableItemSkeleton key={i} />);
+        }
+        return skeletons;
+    };
 
-    if(!countries){
-        return <></>;
+    if (!countries) {
+        return null;
     }
 
-
     return (
-        <>
-                <table className="w-full text-left">
+        <table className={`${style.table} w-full text-left`}>
             <thead>
                 <tr>
                     <th>Flag</th>
@@ -56,9 +81,9 @@ const CountriesTable = ({ countries }: CountriesTableProps) => {
                     <th>Region</th>
                 </tr>
             </thead>
-            <tbody>
-                {loadedCountries && loadedCountries.map(country => {
-                    return <tr key={country.cca2} data-cca2={country.cca2} data-cca3={country.cca3} className="text-white">
+            <tbody id="countryTable">
+                {loadedCountries.map(country => (
+                    <tr key={country.cca2} data-cca2={country.cca2} data-cca3={country.cca3} className="text-white">
                         <td>
                             <ReactCountryFlag
                                 countryCode={country.cca2}
@@ -68,30 +93,19 @@ const CountriesTable = ({ countries }: CountriesTableProps) => {
                                     width: '3em',
                                     height: '3em',
                                 }}
-                                title={country.name.common} />
+                                title={country.name.common}
+                            />
                         </td>
-                        <td><Link href={"/country/" + country.name.common}>{country.name.common}</Link></td>
-                        <td>
-                            {new Intl.NumberFormat().format(
-                                country.population,
-                            )}
-                        </td>
-                        <td>
-                            {new Intl.NumberFormat().format(
-                                country.area,
-                            )}
-                        </td>
+                        <td><Link href={`/country/${country.name.common}`}>{country.name.common}</Link></td>
+                        <td>{new Intl.NumberFormat().format(country.population)}</td>
+                        <td>{new Intl.NumberFormat().format(country.area)}</td>
                         <td>{country.region}</td>
                     </tr>
-                })}
-             
+                ))}
+                {loadingMore && showSkeletons()}
             </tbody>
         </table>
-        <button onClick={handleLoadMoreCountries}>Ver mais</button>
-        </>
+    );
+};
 
-        
-    )
-}
-
-export default CountriesTable
+export default CountriesTable;
