@@ -1,10 +1,10 @@
 import { apiFields, countriesApi } from '@/services/api';
-import getCountryCode from '@/services/countryCode';
 import { CountryInfo } from '@/types/countryType';
 import React from 'react'
 import ReactCountryFlag from 'react-country-flag';
 import style from './style.module.scss';
 import { cache } from 'react'
+import NeighbouringCoutries from '@/components/NeighbouringCoutries';
 
 interface CountryProps {
     params: {
@@ -126,25 +126,8 @@ const countryPage = async ({ params }: CountryProps) => {
                     Neighbouring countries
                 </span>
 
-                <div className='flex gap-3 text-left mt-3'>
-
-
-                    {country.borders.map(border => {
-                        return <div className='neighbouring_flag' key={border}>
-                            <ReactCountryFlag
-                                countryCode={getCountryCode(border)}
-                                aria-label={border}
-                                svg
-                                style={{
-                                    width: '100px',
-                                    height: '75px',
-                                    borderRadius: "10px"
-                                }}
-                                title={border} />
-                        </div>
-                    })}
-
-
+                <div className='flex gap-3 text-left mt-3 flex-wrap'>
+                    <NeighbouringCoutries borders={country.borders} />
                 </div>
 
             </div>
