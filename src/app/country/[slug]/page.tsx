@@ -12,7 +12,7 @@ interface CountryProps {
     }
 }
 
-export const getData = cache(async (slug:String)=>{
+export const getData = cache(async (slug: String) => {
     return countriesApi.get('name/' + slug, {
         params: {
             fullText: true,
@@ -71,54 +71,56 @@ const countryPage = async ({ params }: CountryProps) => {
                 </div>
             </div>
 
-            <div className={style.infoTable + " mt-8"}>
-                <tr>
-                    <td>
-                        Capital
-                    </td>
-                    <td>
-                        {country.capital[0]}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Subregion
-                    </td>
-                    <td>
-                        {country.subregion}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Language
-                    </td>
-                    <td className={style.tdList}>
-                        {Object.entries(country.languages).map(([key, language]) => {
-                            return <span key={key}>{language}</span>
-                        })}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Currencies
-                    </td>
-                    <td>
-                        {Object.entries(country.currencies).map(([abreviation, currencie]) => {
-                            return <span key={abreviation}>{currencie.name}</span>
-                        })}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        Continents
-                    </td>
-                    <td className={style.tdList}>
-                        {country.continents.map(continent => {
-                            return continent
-                        })}
-                    </td>
-                </tr>
-            </div>
+            <table className={style.infoTable + " mt-8"}>
+                <tbody>
+                    <tr>
+                        <td>
+                            Capital
+                        </td>
+                        <td>
+                            {country.capital[0]}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Subregion
+                        </td>
+                        <td>
+                            {country.subregion}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Language
+                        </td>
+                        <td className={style.tdList}>
+                            {Object.entries(country.languages).map(([key, language]) => {
+                                return <span key={key}>{language}</span>
+                            })}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Currencies
+                        </td>
+                        <td>
+                            {Object.entries(country.currencies).map(([abreviation, currencie]) => {
+                                return <span key={abreviation}>{currencie.name}</span>
+                            })}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Continents
+                        </td>
+                        <td className={style.tdList}>
+                            {country.continents.map(continent => {
+                                return continent
+                            })}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div className="neighbouring text-left mt-5">
                 <span className='neighbouring_title'>
                     Neighbouring countries
